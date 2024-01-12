@@ -32,16 +32,9 @@ Existem muitos outros termos e classificações: armazenamentos de valores-chave
 
 
 
+# Arquitetura de um banco de dados
 
 ![Screenshot 2024-01-11 at 23-25-18 Anotações sobre Databases](https://github.com/felipevalerio/estudos-sobre-banco-de-dados/assets/33168249/f12b264d-e3e6-4e34-b530-db69c0bdd19d)
-
-
-
-
-
-
-Arquitetura de um banco de dados
-
 
 
 A storage engine é por sua vez, composta por diversos componentes:
@@ -74,28 +67,11 @@ Exemplo parcial de um banco baseado em disco (HDD)
 
 
 
+![Screenshot 2024-01-11 at 23-26-53 Anotações sobre Databases](https://github.com/felipevalerio/estudos-sobre-banco-de-dados/assets/33168249/53aae773-6ddb-4eac-a29a-032b1bed2ad6)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-File Storage
+# File Storage
 
 Armazena um ou mais arquivos em disco em um formato de arquivo proprietário.
 
@@ -114,7 +90,7 @@ OS Page (4KB)
 Database Page (512B-32KB)
 
 
-Organização das páginas em disco
+#Organização das páginas em disco
 
 Diferentes formas de organizar páginas em disco, com o objetivo de organizar e saber como encontrar as páginas:
 Heap File Organization
@@ -123,54 +99,31 @@ Sequential/Sorted File Organization
 Hashing File Organization
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 Heap File Organization
 
 Coleção de páginas de maneira desorganizada com as páginas sendo armazenadas como tuplas. Suporta create/get/write/delete page (API) assim como iteração pelas páginas.
-
 offset: descolamento. No caso, o deslocamento será descoberto se o número da página (ID?) for multiplicado pelo tamanho da mesma.
 
+![Screenshot 2024-01-11 at 23-27-59 Anotações sobre Databases](https://github.com/felipevalerio/estudos-sobre-banco-de-dados/assets/33168249/d1f50d8f-5b31-48c1-a109-e2a86eb2ba9a)
 
 
 
 O Diretório de páginas contém todas as páginas de arquivos que foram criadas, suas posições, tamanhos etc…
 
+![Screenshot 2024-01-11 at 23-25-18 Anotações sobre Databases](https://github.com/felipevalerio/estudos-sobre-banco-de-dados/assets/33168249/f12b264d-e3e6-4e34-b530-db69c0bdd19d)
 
 
 O diretório precisa ser um reflexo dos arquivos que estão armazenados de maneira física, todas as informações (tamanho, posições) devem ser iguais.
-
 O diretório também guarda informações (metadados) que dizem respeito a quanto espaço tem de sobra, páginas vazias etc…
-
 Um arquivo (database file) para diversas tabelas (como duckdb): primary_db.duckdb
-
 Ou diversos arquivos para diversas tabelas (postgresql)
 
 
 
+# Estrutura de uma página
 
 
-
-
-
-
-
-
-
-
-
-Estrutura de uma página
-
+![Screenshot 2024-01-11 at 23-28-49 Anotações sobre Databases](https://github.com/felipevalerio/estudos-sobre-banco-de-dados/assets/33168249/a5197edc-0026-42f5-8458-1c34f16e1f88)
 
 
 Toda página contém um header de metadados sobre o conteúdo da página:
@@ -183,7 +136,7 @@ Informação do schema
 Sumário dos dados
 
 
-Layout de uma página
+# Layout de uma página
 
 Como os dados são organizados dentro de uma página.
 
@@ -196,29 +149,35 @@ Exemplo de dados organizados em tuplas. Um dado com 5 atributos será armazenado
 
 {01, “Felipe”, 28, “Programador”, “Morretes”, “Paraná”}
 
-Strawman Idea: manter um contador com a quantidade de tuplas em uma página e adicionar uma nova tupla no fim.
 
+Strawman Idea: manter um contador com a quantidade de tuplas em uma página e adicionar uma nova tupla no fim.
 Isso é útil para pegar o número da página, multiplicar pelo tamanho da mesma e o resultado será o offset para indicar onde escrever a página.
 
+![Screenshot 2024-01-11 at 23-29-16 Anotações sobre Databases](https://github.com/felipevalerio/estudos-sobre-banco-de-dados/assets/33168249/92fea999-06f5-4831-acb7-adce4a842ba2)
 
 
 Problemas dessa ideia:
 Deletar uma tupla se torna um problema, pois nós poderíamos querer usar o espaço liberado pela tupla deletada, mas isso irá violar a regra da ideia que diz que uma nova tupla deve ser adicionada no fim, ou seja, em uma posição após todas as tuplas já existentes na página. A tupla seria adicionada no local recém liberado, tornando assim as tuplas fora de ordem.
 
 
+![Screenshot 2024-01-11 at 23-29-22 Anotações sobre Databases](https://github.com/felipevalerio/estudos-sobre-banco-de-dados/assets/33168249/61186b18-90bb-42f3-89b8-0ed43a5d123c)
+
 
 
 E se as tuplas não tiverem um tamanho fixo? Exemplo: endereços de email tem tamanhos diferentes. Então a tupla não poderia caber na página (que tem tamanho fixo)
 
 
-
-
 Slotted Pages: existe um header, mas junto com ele existe um array de slots que contém as posições das tuplas.
 O header mantém as informações sobre o número de slots usados e a localização do offset (deslocamento) do último slot usado.
 
+![Screenshot 2024-01-11 at 23-29-28 Anotações sobre Databases](https://github.com/felipevalerio/estudos-sobre-banco-de-dados/assets/33168249/bda07f3e-df1d-4cb5-b721-ae8ef976147c)
 
 
 Caso um novo dado seja adicionado, uma nova tupla, o slot array vai conter a posição da nova tupla e o array irá crescer do começo para o fim. Enquanto a tupla será adicionada do fim ao começo.
+
+
+
+![Screenshot 2024-01-11 at 23-29-40 Anotações sobre Databases](https://github.com/felipevalerio/estudos-sobre-banco-de-dados/assets/33168249/64b32a99-540f-4272-85b3-9c46e96ba58d)
 
 
 
@@ -230,6 +189,6 @@ Resumindo: um banco de dados, na sua camada de storage, contém um diretório co
 A página também contém diversas informações sobre ela mesma. No header estão presentes o tamanho da página, checksum, versão do banco, compression/encoding dos metadados, informação do schema, sumário dos dados.
 A página também utiliza de offsets para saber onde se encontram os dados armazenados na página (armazenados como tuplas).
 
-Como identificar as tuplas?
+# Como identificar as tuplas?
 
 
