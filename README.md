@@ -33,20 +33,28 @@ Existem muitos outros termos e classificações: armazenamentos de valores-chave
 A storage engine é por sua vez, composta por diversos componentes:
 
 _Transaction Manager:_ realiza o agendamento de transações e garante que elas não possam sair do banco de dados em um estado logicamente inconsistente.
+
 _Lock Manager:_ realiza o bloqueio de objetos do banco de dados para que as transações sejam executadas, garantindo que as operações simultâneas não violem a integridade física dos dados.
+
 _Access Methods (Storage Structure):_ uma estrutura que é responsável por organizar os dados em disco, como por exemplo: B-Tree ou LSM Trees.
+
 _Buffer Manager:_ responsável por realizar o cache das páginas na memória.
+
 _Recovery Manager:_ mantém um log das operações e é responsável por recuperar o estado do sistema em caso de falha.
 
 
+
 In memory databases: armazena dados “em memória” e usa o disco para recuperação e logging.
+
 Disk bases databases: armazena os dados em disco e usa a memória para cache ou como um armazenamento temporário.
 
 
 ### Leitura de Dados de maneira sequencial ou de maneira aleatória
 
 Leitura de maneira aleatória em memórias não voláteis (HDD, SDD), é quase sempre muito mais lenta do que uma leitura de maneira sequencial.
+
 O Banco de dados sempre irá tentar maximizar a leitura de dados de maneira sequencial.
+
 I/O em disco é uma ação cara e se for realizada diversas vezes para somente uma operação/transação, pode acabar afetando a performance do banco.
 
 
@@ -61,12 +69,15 @@ I/O em disco é uma ação cara e se for realizada diversas vezes para somente u
 ### File Storage
 
 Armazena um ou mais arquivos em disco em um formato de arquivo proprietário.
+
 Storage Manager é responsável por manter os dados em disco. Alguns fazem a leitura e escrita dos arquivos de maneira esporádica.
+
 Organiza os arquivos como uma coleção de páginas.
 
-A página é um bloco de dados de tamanho fixo:
-contém diversos tipos de dados: tuplas, logs, indexes, metadados…
+A página é um bloco de dados de tamanho fixo, contém diversos tipos de dados: tuplas, logs, indexes, metadados
+
 maioria dos bancos mantém um tipo de dados de uma página de maneira específica
+
 cada página tem um ID específico, usado pelo banco para mapear as páginas em disco
 
 Quando falamos de páginas, podemos nos referir a três definições:
