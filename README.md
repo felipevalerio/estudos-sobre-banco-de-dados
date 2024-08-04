@@ -194,12 +194,12 @@ Uma query engine tem como objetivo receber uma query, realizar um parse nela, to
 É o processo de "parsear" a query e transformar cada pedaço dela em um token que será classificado em uma categoria definida de acordo com a sintaxe existente na linguagem SQL.
 Exemplo:
 
-A query "SELECT * FROM users;" ficaria dessa forma
+A query "SELECT * FROM users;" ficaria dessa forma<br />
 
-Keyword => SELECT
-Operator => *
-Keyword => FROM
-Identifier => users
+Keyword => SELECT <br />
+Operator => *<br />
+Keyword => FROM<br />
+Identifier => users<br />
 Delimiter => ;
 
 Sendo que cada categoria é escrita em código e pode ser representada usando uma Struct ou Enum.
