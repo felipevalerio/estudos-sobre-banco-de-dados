@@ -182,6 +182,25 @@ Resumindo: um banco de dados, na sua camada de storage, contém um diretório co
 A página também contém diversas informações sobre ela mesma. No header estão presentes o tamanho da página, checksum, versão do banco, compression/encoding dos metadados, informação do schema, sumário dos dados.
 A página também utiliza de offsets para saber onde se encontram os dados armazenados na página (armazenados como tuplas).
 
-### Como identificar as tuplas?
+### Query Engines
 
+
+![Query Engine Internals](https://github.com/user-attachments/assets/73db7b4d-a582-425f-ae70-e063c8b33c51)
+
+Uma query engine tem como objetivo receber uma query, realizar um parse nela, tokenizar, criar uma AST, planejar, otimizar e executar.
+
+## Tokenização
+
+É o processo de "parsear" a query e transformar cada pedaço dela em um token que será classificado em uma categoria definida de acordo com a sintaxe existente na linguagem SQL.
+Exemplo:
+
+A query "SELECT * FROM users;" ficaria dessa forma
+
+Keyword => SELECT
+Operator => *
+Keyword => FROM
+Identifier => users
+Delimiter => ;
+
+Sendo que cada categoria é escrita em código e pode ser representada usando uma Struct ou Enum.
 
