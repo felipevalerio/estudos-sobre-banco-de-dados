@@ -1,10 +1,5 @@
 # estudos-sobre-banco-de-dados
 
-Just a bunch of annotations about DMBS based on the CMU Database Courses and the book Database Internals.
-Everything is in Portuguese, I will rewrite it in a less crazy and more "formal" way in English.
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 
 A tarefa principal de um banco de dados (sistema de gerenciamento de banco de dados) é armazenar dados de uma forma segura e torná-los disponíveis para os usuários.
