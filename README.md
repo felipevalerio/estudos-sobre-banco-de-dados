@@ -10,8 +10,8 @@ Banco de dados é um sistema modular composto por: uma camada de transporte (tra
 _Storage Engines_: é um componente de um banco de dados responsável por armazenar, recuperar e organizar/gerenciar dados em memória e em disco de uma maneira persistente. A storage engine fornece uma API que permite criar, editar, deletar e selecionar dados armazenados. 
 Alguns bancos de dados (MySQL) podem ter várias storage engines para serem escolhidas. Elas são “plugáveis”, podendo ser trocadas a qualquer momento. Por exemplo: InnoDB, MyRocks e MyISAM.
 
-_OLTP:_ esse tipo de banco de dados tem a capacidade de lidar com um alto número de requisições e transações do usuário. As queries são mais “simples” e curtas.
-_OLAP:_ esse tipo de banco de dados é capaz de executar queries complexas, para que sejam realizadas análises nos dados armazenados.
+_OLTP:_ esse tipo de banco de dados tem a capacidade de lidar com um alto número de requisições e transações do usuário. As queries são mais “simples” e curtas.</br>
+_OLAP:_ esse tipo de banco de dados é capaz de executar queries complexas, para que sejam realizadas análises nos dados armazenados.</br>
 _HTAP:_ combina os dois tipos anteriores.
 
 Existem muitos outros termos e classificações: armazenamentos de valores-chave (key value store), bancos de dados relacionais (relational databases), armazenamentos orientados a documentos (document databases), bancos de dados gráficos (graph databases) e banco de dados não relacional (noSQL).
