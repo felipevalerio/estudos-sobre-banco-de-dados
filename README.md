@@ -174,7 +174,10 @@ Caso uma tupla seja deletada, é preciso somente mover uma tupla, por exemplo a 
 
 Resumindo: um banco de dados, na sua camada de storage, contém um diretório com todas as páginas de arquivos criadas em disco. Esse diretório contém diversas informações sobre as páginas: IDs, tamanho, posição e outros metadados. Quando for necessário ler, deletar, criar ou atualizar as páginas, o banco cria uma cópia desse diretório em memória (buffer pool), e recebe da execution engine qual página é necessária para fazer a ação. O diretório então calcula o tamanho da página x o número dela (ID?) para conseguir o offset que é o deslocamento que a página está localizada. Pense em offset como o resultado de uma operação que está dizendo, a página de ID X tem o tamanho Y, o offset é uma referência que vai do começo até atingir o tamanho final da página, por isso em português offset é um deslocamento. É o descolamento da página em disco. Isso então retorna um ponteiro de 64 bits para a execution engine, para que ela possa fazer a ação requisitada pelo usuário. Se forem feitas alterações (update), as mesmas são feitas na página in-memory, para que então os dados sejam replicados na página que está armazenada de maneira física, em disco. 
 
+
 A página também contém diversas informações sobre ela mesma. No header estão presentes o tamanho da página, checksum, versão do banco, compression/encoding dos metadados, informação do schema, sumário dos dados.
 A página também utiliza de offsets para saber onde se encontram os dados armazenados na página (armazenados como tuplas).
 
+
+### Orientação a colunas VS Orientação a linhas
 
